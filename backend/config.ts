@@ -8,6 +8,10 @@ const config = {
     mongoose: {
         db: 'mongodb://localhost/cocktail',
     },
+    google: {
+        clientId: process.env['GOOGLE_CLINT_ID'],
+        clientSecret: process.env['GOOGLE_CLINT_SECRET'],
+    },
 };
 
 export default config;

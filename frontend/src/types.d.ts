@@ -1,6 +1,6 @@
 export interface Cocktail {
   _id: string;
-  user: string;
+  userId: string;
   name: string;
   image: string;
   recipe: string;
@@ -11,6 +11,14 @@ export interface Cocktail {
 export interface Ingredient {
   name: string;
   quantity: string;
+}
+
+export interface CocktailMutation {
+  userId: string;
+  name: string;
+  image: File | string | null;
+  recipe: string;
+  ingredients: Ingredient[];
 }
 
 export interface User {

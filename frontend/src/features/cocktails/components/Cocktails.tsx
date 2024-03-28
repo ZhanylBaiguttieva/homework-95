@@ -10,7 +10,7 @@ const Cocktails = () => {
   const cocktails = useAppSelector(selectCocktails);
 
   useEffect(() => {
-    dispatch(fetchCocktails);
+    dispatch(fetchCocktails());
   }, [dispatch]);
 
   return (
@@ -22,10 +22,10 @@ const Cocktails = () => {
           </strong>
         </Typography>
       </Grid>
-      <Grid item container spacing={2}>
-        {cocktails.map(cocktail => (
+      <Grid item container justifyContent="flex-start" alignItems="flex-start" direction="row">
+        {cocktails.map((cocktail,index) => (
           <CocktailItem
-            key={cocktail._id}
+            key={index}
             cocktail={cocktail}
           />
         ))}

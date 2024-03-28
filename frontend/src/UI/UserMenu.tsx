@@ -41,7 +41,7 @@ const UserMenu: React.FC<Props> = ({user}) => {
   return (
     <>
       <Typography component="div">
-        <Link to="/track_history">Track History</Link>
+        <Link to="/mycocktails">My Cocktails</Link>
       </Typography>
       <Stack direction="row" spacing={1}>
         <Avatar alt={user.displayName} src={avatarImage} />

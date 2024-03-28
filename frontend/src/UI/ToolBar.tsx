@@ -20,7 +20,7 @@ const ToolBar = () => {
       <Toolbar>
         <Grid container justifyContent="space-between" alignItems="center">
           <Typography variant="h6" component="div">
-            <Link to="/">Music App</Link>
+            <Link to="/">Cocktail Builder</Link>
           </Typography>
           { user ?
             (

@@ -47,20 +47,18 @@ const run = async () => {
             userId: user1.id,
             name: 'Long Island',
             recipe: 'Some recipe',
-            image: 'fixtures/jackson_photo.jpg',
+            image: 'fixtures/longisland.png',
             isPublished: false,
-            ingredients: [
-                {
+            ingredients: [{
                     name: 'White rum',
-                    quantity: '15ml',
-                },
-            ],
+                    quantity: '15ml'
+            }],
         },
         {
             userId: user1.id,
-            name: 'Laguna',
+            name: 'Lagoon',
             recipe: 'Some recipe 2',
-            image: 'fixtures/jackson_photo.jpg',
+            image: 'fixtures/BlueLaguna.png',
             isPublished: false,
             ingredients: [
                 {

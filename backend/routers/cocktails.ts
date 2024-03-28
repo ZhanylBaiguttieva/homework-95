@@ -6,10 +6,26 @@ import Cocktail from "../models/Cocktail";
 
 const cocktailsRouter = Router();
 
-cocktailsRouter.get('/', async (req,res,next) => {
+cocktailsRouter.get('/', async (req: RequestWithUser, res,next) => {
     try {
-        const result = await Cocktail.find();
-        return res.send(result);
+        const cocktails = await Cocktail.find().populate('ingredients', 'name quantity');
+
+        const cocktailsFilled = cocktails.map((cocktailOne) => ({
+                id: cocktailOne.id,
+                userId: req.user?._id,
+                name: cocktailOne.name,
+                recipe: cocktailOne.recipe,
+                ingredients: cocktailOne.ingredients.map(ingredient =>
+                    ({
+                        name: ingredient.name,
+                        quantity: ingredient.quantity,
+                    }),
+                ),
+                image: cocktailOne.image,
+            })
+        )
+
+        return res.send(cocktailsFilled);
     } catch (e) {
         return next(e);
     }
@@ -17,15 +33,18 @@ cocktailsRouter.get('/', async (req,res,next) => {
 cocktailsRouter.post(
     '/',
     auth,
-    permit( 'admin'),
+    permit( 'admin','user'),
     imagesUpload.single('image'),
     async(req: RequestWithUser, res, next ) => {
     try {
+        let  ingredientsParse;
+        ingredientsParse = JSON.parse(req.body.ingredients);
+
         const cocktailData = {
-            user: req.user?._id,
-            name: req.body.email,
+            userId: req.user?._id,
+            name: req.body.name,
             recipe: req.body.recipe,
-            ingredients: req.body.ingredients,
+            ingredients: ingredientsParse,
             image: req.file ? req.file.filename : null,
         };
         const cocktail = new Cocktail(cocktailData);

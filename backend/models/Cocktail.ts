@@ -3,7 +3,7 @@ import mongoose, {Schema, Types} from "mongoose";
 import User from "./User";
 
 const CocktailSchema = new mongoose.Schema({
-    user: {
+    userId: {
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true,

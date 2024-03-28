@@ -6,7 +6,7 @@ const config = {
     rootPath,
     publicPath: path.join(rootPath, 'public'),
     mongoose: {
-        db: 'mongodb://localhost/cocktail',
+        db: 'mongodb://localhost/cocktailShop',
     },
     google: {
         clientId: process.env['GOOGLE_CLINT_ID'],

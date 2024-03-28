@@ -1,3 +1,18 @@
+export interface Cocktail {
+  _id: string;
+  user: string;
+  name: string;
+  image: string;
+  recipe: string;
+  isPublished: boolean;
+  ingredients: Ingredient[];
+}
+
+export interface Ingredient {
+  name: string;
+  quantity: string;
+}
+
 export interface User {
   _id: string;
   email: string;

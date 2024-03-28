@@ -23,7 +23,7 @@ const CocktailSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    receipt: {
+    recipe: {
         type: String,
         required: true,
     },

@@ -24,7 +24,7 @@ cocktailsRouter.post(
         const cocktailData = {
             user: req.user?._id,
             name: req.body.email,
-            receipt: req.body.receipt,
+            recipe: req.body.recipe,
             ingredients: req.body.ingredients,
             image: req.file ? req.file.filename : null,
         };

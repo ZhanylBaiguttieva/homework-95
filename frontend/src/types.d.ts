@@ -14,11 +14,10 @@ export interface Ingredient {
 }
 
 export interface CocktailMutation {
-  userId: string;
   name: string;
   image: File | string | null;
   recipe: string;
-  ingredients: Ingredient[];
+  ingredients: string;
 }
 
 export interface User {

@@ -1,4 +1,4 @@
-import { CocktailMutation } from '../../../types';
+import { CocktailMutation, Ingredient } from '../../../types';
 import { useState } from 'react';
 import { useAppSelector } from '../../../app/hooks.ts';
 import { selectUser } from '../../users/usersSlice.ts';
@@ -7,6 +7,7 @@ import { selectCocktailCreating } from '../cocktailsSlice.ts';
 import { Grid, TextField } from '@mui/material';
 import FileInput from '../../../UI/FileInput.tsx';
 import { LoadingButton } from '@mui/lab';
+import IngredientForm from './IngredientForm.tsx';
 
 interface Props {
   onSubmit: (mutation: CocktailMutation) => void;
@@ -20,11 +21,10 @@ const CocktailForm: React.FC<Props> = ({onSubmit}) => {
 
   const isCreating = useAppSelector(selectCocktailCreating);
   const [state, setState] = useState<CocktailMutation>({
-    userId: '',
     name: '',
     image: null,
     recipe: '',
-    ingredients: [],
+    ingredients: '',
   });
 
   const submitFormHandler = (e: React.FormEvent) => {
@@ -40,6 +40,7 @@ const CocktailForm: React.FC<Props> = ({onSubmit}) => {
     });
   };
 
+
   const fileInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, files} = e.target;
     if (files) {
@@ -47,6 +48,13 @@ const CocktailForm: React.FC<Props> = ({onSubmit}) => {
         ...prevState, [name]: files[0]
       }));
     }
+  };
+
+  const setIngredientsString = (ingredients: Ingredient[]) => {
+    setState((prevState) => ({
+      ...prevState,
+      ingredients: JSON.stringify(ingredients),
+    }));
   };
 
   return (
@@ -73,7 +81,9 @@ const CocktailForm: React.FC<Props> = ({onSubmit}) => {
             required
           />
         </Grid>
-
+        <Grid>
+          <IngredientForm setString={setIngredientsString}/>
+        </Grid>
         <Grid item xs>
           <FileInput
             label="Image"
@@ -81,10 +91,9 @@ const CocktailForm: React.FC<Props> = ({onSubmit}) => {
             onChange={fileInputChangeHandler}
           />
         </Grid>
-
         <Grid item xs>
           <LoadingButton type="submit" color="primary" variant="contained" loading={isCreating}>Add
-            artist</LoadingButton>
+            cocktail</LoadingButton>
         </Grid>
       </Grid>
     </form>

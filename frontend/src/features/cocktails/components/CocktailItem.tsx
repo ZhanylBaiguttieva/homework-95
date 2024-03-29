@@ -17,7 +17,7 @@ const CocktailItem: React.FC<Props> = ({cocktail}) => {
     cardImage = apiURL + '/' + cocktail.image;
   }
   return (
-    <Grid sm md={6} lg={4}>
+    <Grid sm md={6} lg={4} m={1}>
       <Card sx={{ maxWidth: 345}}>
         <ImageCardMedia image={cardImage}/>
         <CardContent>

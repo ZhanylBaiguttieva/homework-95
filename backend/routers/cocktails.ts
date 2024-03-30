@@ -17,7 +17,13 @@ cocktailsRouter.get('/',check, async (req: RequestWithUser, res,next) => {
         if(user && user.role === 'admin') {
             filter = {};
         } else if(user && user.role === 'user') {
-            filter = {userId: req.user?._id}
+
+            filter = {
+                $or: [
+                    {isPublished: true},
+                    {userId: req.user?._id},
+                ],
+            };
         }
 
         const cocktails = await Cocktail.find(filter).populate('ingredients', 'name quantity');
@@ -32,6 +38,7 @@ cocktailsRouter.get('/',check, async (req: RequestWithUser, res,next) => {
                         quantity: ingredient.quantity,
                     }),
                 ),
+                isPublished: cocktailOne.isPublished,
                 image: cocktailOne.image,
             })
         )
@@ -56,6 +63,7 @@ cocktailsRouter.post(
             name: req.body.name,
             recipe: req.body.recipe,
             ingredients: ingredientsParse,
+            isPublished: req.body.isPublished,
             image: req.file ? req.file.filename : null,
         };
         const cocktail = new Cocktail(cocktailData);

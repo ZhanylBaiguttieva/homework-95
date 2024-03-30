@@ -59,7 +59,7 @@ const run = async () => {
             name: 'Lagoon',
             recipe: 'Some recipe 2',
             image: 'fixtures/BlueLaguna.png',
-            isPublished: false,
+            isPublished: true,
             ingredients: [
                 {
                     name: 'Tequila',
@@ -71,6 +71,29 @@ const run = async () => {
                 },
             ],
         },
+        {
+            userId: user2.id,
+            name: 'Cocko',
+            recipe: 'Some recipe',
+            image: 'fixtures/longisland.png',
+            isPublished: false,
+            ingredients: [{
+                name: 'White wine',
+                quantity: '15ml'
+            }],
+        },
+        {
+            userId: user2.id,
+            name: 'MilkShady',
+            recipe: 'Some recipe',
+            image: 'fixtures/longisland.png',
+            isPublished: true,
+            ingredients: [{
+                name: 'Wisky',
+                quantity: '15ml'
+            }],
+        },
+
 
     );
 

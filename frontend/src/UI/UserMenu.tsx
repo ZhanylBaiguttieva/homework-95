@@ -40,9 +40,11 @@ const UserMenu: React.FC<Props> = ({user}) => {
 
   return (
     <>
-      <Typography component="div">
-        <Link to="/mycocktails">My Cocktails</Link>
-      </Typography>
+      {user.role === 'user'  && (
+        <Typography component="div">
+          <Link to="/mycocktails">My Cocktails</Link>
+        </Typography>
+      )}
       <Stack direction="row" spacing={1}>
         <Avatar alt={user.displayName} src={avatarImage} />
         <Button color="inherit" onClick={handleClick}>

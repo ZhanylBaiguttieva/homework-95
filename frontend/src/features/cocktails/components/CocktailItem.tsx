@@ -1,14 +1,25 @@
 import React from 'react';
 import { Cocktail } from '../../../types';
-import { Button, Card, CardActions, CardContent, CardMedia, Divider, Grid, styled, Typography } from '@mui/material';
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Divider,
+  Grid,
+  IconButton,
+  styled,
+  Typography
+} from '@mui/material';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { apiURL } from '../../../constants.ts';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
 import { selectUser } from '../../users/usersSlice.ts';
 import { selectDeletingCocktail } from '../cocktailsSlice.ts';
-import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { deleteCocktail, fetchCocktails, publishCocktail } from '../cocktailsThunk.ts';
 import { LoadingButton } from '@mui/lab';
-
 const ImageCardMedia = styled(CardMedia)({
   height: 0,
   paddingTop: '56.25%',
@@ -29,6 +40,7 @@ const CocktailItem: React.FC<Props> = ({cocktail}) => {
   const makePublishedCocktail = async () => {
     await dispatch(publishCocktail(cocktail._id));
     await dispatch(fetchCocktails());
+    navigate('/');
   };
 
   let cardImage;
@@ -36,7 +48,7 @@ const CocktailItem: React.FC<Props> = ({cocktail}) => {
     cardImage = apiURL + '/' + cocktail.image;
   }
   return (
-    <Grid sm md={6} lg={4} m={1}>
+    <Grid item sm md={6} lg={4} m={1}>
       <Card sx={{ maxWidth: 345}}>
         <ImageCardMedia image={cardImage}/>
         <CardContent>
@@ -45,8 +57,8 @@ const CocktailItem: React.FC<Props> = ({cocktail}) => {
           </Typography>
           <Typography>
             <Divider textAlign="left"> <b>Ingredients:</b></Divider>
-            {cocktail.ingredients.map(ingredient => (
-              <Typography>{ingredient.name}: {ingredient.quantity}</Typography>
+            {cocktail.ingredients.map((ingredient, index) => (
+              <Typography key={index}>{ingredient.name}: {ingredient.quantity}</Typography>
             ))}
           </Typography>
           <Divider textAlign="left"><b>Recipe:</b></Divider>
@@ -56,6 +68,11 @@ const CocktailItem: React.FC<Props> = ({cocktail}) => {
         </CardContent>
         <CardActions>
           <Grid container justifyContent="space-between">
+            <Grid item>
+              <IconButton component={RouterLink} to={'/cocktails/' + cocktail._id}>
+                <ArrowForwardIcon/> more...
+              </IconButton>
+            </Grid>
             {user?.role === 'admin' && (
               <Grid item>
                 <LoadingButton

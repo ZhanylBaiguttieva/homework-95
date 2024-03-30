@@ -1,18 +1,22 @@
 import { Cocktail } from '../../types';
 import { createSlice } from '@reduxjs/toolkit';
-import { createCocktail, deleteCocktail, fetchCocktails } from './cocktailsThunk.ts';
+import { createCocktail, deleteCocktail, fetchCocktails, fetchOneCocktail } from './cocktailsThunk.ts';
 import { RootState } from '../../app/store.ts';
 
 interface CocktailsState {
   items: Cocktail[];
+  cocktail: Cocktail | null;
   fetching: boolean;
+  fetchingOneCocktail: boolean;
   creating: boolean;
   deleteLoading: boolean;
 }
 
 const initialState: CocktailsState = {
   items: [],
+  cocktail: null,
   fetching: false,
+  fetchingOneCocktail: false,
   creating: false,
   deleteLoading: false,
 };
@@ -31,6 +35,17 @@ export const cocktailsSlice = createSlice({
     });
     builder.addCase(fetchCocktails.rejected, (state) => {
       state.fetching = false;
+    });
+
+    builder.addCase(fetchOneCocktail.pending, (state) => {
+      state.fetchingOneCocktail = true;
+    });
+    builder.addCase(fetchOneCocktail.fulfilled, (state, {payload: cocktail}) => {
+      state.fetchingOneCocktail = false;
+      state.cocktail = cocktail;
+    });
+    builder.addCase(fetchOneCocktail.rejected, (state) => {
+      state.fetchingOneCocktail = false;
     });
 
     builder.addCase(createCocktail.pending, (state) => {

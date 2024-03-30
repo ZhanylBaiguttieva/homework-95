@@ -23,9 +23,9 @@ const Cocktails = () => {
         </Typography>
       </Grid>
       <Grid item container justifyContent="flex-start" alignItems="flex-start" direction="row">
-        {cocktails.map((cocktail,index) => (
+        {cocktails.map((cocktail) => (
           <CocktailItem
-            key={index}
+            key={cocktail._id}
             cocktail={cocktail}
           />
         ))}

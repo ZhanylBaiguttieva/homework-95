@@ -29,6 +29,7 @@ cocktailsRouter.get('/',check, async (req: RequestWithUser, res,next) => {
         const cocktails = await Cocktail.find(filter).populate('ingredients', 'name quantity');
 
         const cocktailsFilled = cocktails.map((cocktailOne) => ({
+                _id: cocktailOne._id,
                 userId: req.user?._id,
                 name: cocktailOne.name,
                 recipe: cocktailOne.recipe,
@@ -48,6 +49,22 @@ cocktailsRouter.get('/',check, async (req: RequestWithUser, res,next) => {
         return next(e);
     }
 });
+cocktailsRouter.get('/:id', async (req, res, next) => {
+    try {
+        let _id: Types.ObjectId;
+        try {
+            _id = new Types.ObjectId(req.params.id);
+        } catch {
+            return res.status(404).send({ error: 'Wrong ObjectId!' });
+        }
+        const cocktail = await Cocktail.findById(_id);
+
+        res.send(cocktail);
+    } catch (e) {
+        next(e);
+    }
+});
+
 cocktailsRouter.post(
     '/',
     auth,
@@ -99,6 +116,8 @@ cocktailsRouter.delete(
         }
     },
 );
+
+
 
 cocktailsRouter.patch(
     '/:id/togglePublished',

@@ -11,16 +11,16 @@ const cocktailsRouter = Router();
 
 cocktailsRouter.get('/',check, async (req: RequestWithUser, res,next) => {
     try {
-        const isMine = req.query.isMine;
         const user = req.user;
+        const userId = req.query.userId;
 
         let filter: FilterQuery<CocktailFields> = {isPublished: true};
 
         if(user && user.role === 'admin') {
             filter = {};
         } else if(user && user.role === 'user') {
-            if ( isMine ) {
-                filter = {userId: req.user?._id, isPublished: false}
+            if ( userId ) {
+                filter = {userId: req.query.userId, isPublished:false}
             } else {
                 filter = {isPublished: true}
             }

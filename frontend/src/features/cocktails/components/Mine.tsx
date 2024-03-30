@@ -4,15 +4,19 @@ import { useEffect } from 'react';
 import { fetchMyCocktails } from '../cocktailsThunk.ts';
 import { Grid, Typography } from '@mui/material';
 import CocktailItem from './CocktailItem.tsx';
+import { selectUser } from '../../users/usersSlice.ts';
 
 
 const Mine = () => {
   const dispatch = useAppDispatch();
   const cocktails = useAppSelector(selectCocktails);
+  const user = useAppSelector(selectUser);
 
-  useEffect(() => {
-    dispatch(fetchMyCocktails("true"));
-  }, [dispatch]);
+  if(user) {
+    useEffect(() => {
+      dispatch(fetchMyCocktails(user._id));
+    }, [dispatch]);
+  }
 
   return (
     <Grid container direction="column" spacing={2}>

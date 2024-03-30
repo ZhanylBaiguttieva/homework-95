@@ -11,19 +11,20 @@ const cocktailsRouter = Router();
 
 cocktailsRouter.get('/',check, async (req: RequestWithUser, res,next) => {
     try {
+        const isMine = req.query.isMine;
         const user = req.user;
+
         let filter: FilterQuery<CocktailFields> = {isPublished: true};
 
         if(user && user.role === 'admin') {
             filter = {};
         } else if(user && user.role === 'user') {
+            if ( isMine ) {
+                filter = {userId: req.user?._id, isPublished: false}
+            } else {
+                filter = {isPublished: true}
+            }
 
-            filter = {
-                $or: [
-                    {isPublished: true},
-                    {userId: req.user?._id},
-                ],
-            };
         }
 
         const cocktails = await Cocktail.find(filter).populate('ingredients', 'name quantity');

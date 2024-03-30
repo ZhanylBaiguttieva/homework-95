@@ -72,7 +72,8 @@ export const cocktailsSlice = createSlice({
 
 export const cocktailsReducer = cocktailsSlice.reducer;
 export const selectCocktails = (state: RootState) => state.cocktails.items;
-export const selectCocktailsFetching = (state: RootState) => state.cocktails.fetching;
+
+export const selectOneCocktail = (state: RootState) => state.cocktails.cocktail;
 export const selectCocktailCreating = (state:RootState) => state.cocktails.creating;
 export const selectDeletingCocktail = (state: RootState) => state.cocktails.deleteLoading;
 
